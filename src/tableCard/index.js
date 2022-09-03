@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
+import { Box, LinearProgress } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
@@ -35,7 +36,7 @@ function createData(date: number, location: string, temp: number) {
   return { date, location, temp };
 }
 
-const TableCard = () => {
+const TableCard = ({ isLoading }) => {
   const { dt, name, main: { temp } = {} } = useSelector(weatherData);
 
   const rows = [
@@ -54,15 +55,21 @@ const TableCard = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell component="th" scope="row">
-                {row.date}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.location}</StyledTableCell>
-              <StyledTableCell align="right">{row.temp} F</StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {isLoading ? (
+              <Box sx={{ width: '100%' }}>
+                <LinearProgress />
+              </Box>
+          ) : (
+            rows.map((row, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell component="th" scope="row">
+                  {row.date}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.location}</StyledTableCell>
+                <StyledTableCell align="right">{row.temp} F</StyledTableCell>
+              </StyledTableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </TableContainer>

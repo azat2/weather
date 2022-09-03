@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Skeleton, Stack } from "@mui/material";
 
 import TableCard from "./tableCard";
 import WeatherCard from "./weatherCard";
@@ -25,7 +24,7 @@ function App() {
     try {
       const data = await fetch(getDataUrl[countryName]);
       const result = await data.json();
-      console.log(result);
+
       if (result.cod === 200) {
         setIsLoading(false);
         dispatch(saveWeather(result));
@@ -39,23 +38,10 @@ function App() {
     getData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <Stack spacing={1}>
-        {/* For variant="text", adjust the height via font-size */}
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        {/* For other variants, adjust the size with `width` and `height` */}
-        <Skeleton variant="rectangular" width={50} height={40} />
-        <Skeleton variant="rectangular" width={210} height={60} />
-        <Skeleton variant="rounded" width={350} height={60} />
-      </Stack>
-    );
-  }
-
   return (
     <>
-      <WeatherCard getData={getData} />,
-      <TableCard />
+      <WeatherCard isLoading={isLoading} getData={getData} />
+      <TableCard isLoading={isLoading}/>
     </>
   );
 }

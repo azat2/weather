@@ -1,23 +1,51 @@
 import { useSelector } from "react-redux";
-import { Button, Card } from "@mui/material";
+import {
+  Card,
+  Button,
+  Typography,
+  CardContent,
+  CircularProgress,
+} from "@mui/material";
 
 import { weatherData } from "../store/selectors";
 import { buttonName, countryList } from "../constants";
 
-const WeatherCard = ({ getData }) => {
+const WeatherCard = ({ isLoading, getData }) => {
   const {
     name,
+    main: { temp } = {},
     sys: { country } = {},
-    main: { temp },
   } = useSelector(weatherData);
 
   const handleRegionChange = (e) => {
     const {
       target: { value },
     } = e;
-    console.log(value, "value");
+
     getData(value);
   };
+
+  const card = (
+    <>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          We are currently in
+        </Typography>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Typography variant="h5" component="div">
+              {name}, {countryList[country]}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {temp} F
+            </Typography>
+          </>
+        )}
+      </CardContent>
+    </>
+  );
 
   return (
     <>
@@ -30,15 +58,7 @@ const WeatherCard = ({ getData }) => {
         {buttonName[country]}
       </Button>
 
-      <Card variant="outlined">
-        <div>
-          <p>We are currently in</p>
-          <h1>
-            {name}, {countryList[country]}
-          </h1>
-        </div>
-        <p1>{temp} F</p1>
-      </Card>
+      <Card variant="outlined">{card}</Card>
     </>
   );
 };
