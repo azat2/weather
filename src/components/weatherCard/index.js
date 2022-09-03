@@ -7,8 +7,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { weatherData } from "../store/selectors";
-import { buttonName, countryList } from "../constants";
+import { weatherData } from "../../store/selectors";
+import { buttonName, countryList } from "../../constants";
 
 const WeatherCard = ({ isLoading, getData }) => {
   const {

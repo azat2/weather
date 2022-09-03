@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import TableCard from "./tableCard";
-import WeatherCard from "./weatherCard";
+import TableCard from "./components/tableCard";
+import WeatherCard from "./components/weatherCard";
 
 import { saveWeather } from "./store/actions/weather";
 

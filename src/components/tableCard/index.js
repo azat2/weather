@@ -10,7 +10,7 @@ import { Box, LinearProgress } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
-import { weatherData } from "../store/selectors";
+import { weatherData } from "../../store/selectors";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
