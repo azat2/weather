@@ -51,8 +51,8 @@ const WeatherCard = ({ isLoading, getData }) => {
     <>
       <Button
         text="yerevan"
-        value={buttonName[country]}
         variant="contained"
+        value={buttonName[country]}
         onClick={handleRegionChange}
       >
         {buttonName[country]}

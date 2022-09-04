@@ -5,10 +5,12 @@ import TableCard from "./components/tableCard";
 import WeatherCard from "./components/weatherCard";
 
 import { saveWeather } from "./store/actions/weather";
+import { saveHistory } from "./store/actions/weatherHistory";
 
 function App() {
   const dispatch = useDispatch();
 
+  const [init, setInit] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async (countryName = "Los Angelos") => {
@@ -28,6 +30,14 @@ function App() {
       if (result.cod === 200) {
         setIsLoading(false);
         dispatch(saveWeather(result));
+        const {
+          dt,
+          name,
+          sys: { country },
+          main: { temp } = {},
+        } = result;
+        !init && dispatch(saveHistory({ dt, name, temp, country, }));
+        init && setInit(false);
       }
     } catch (err) {
       console.log(err);
@@ -36,12 +46,12 @@ function App() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
       <WeatherCard isLoading={isLoading} getData={getData} />
-      <TableCard isLoading={isLoading}/>
+      <TableCard isLoading={isLoading} />
     </>
   );
 }
